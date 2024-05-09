@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 export default function EditTopicForm({ id, title, description }) {
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
@@ -13,7 +13,7 @@ export default function EditTopicForm({ id, title, description }) {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+      const res = await fetch(`/api/topics/${id}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
@@ -33,26 +33,41 @@ export default function EditTopicForm({ id, title, description }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-3 w-full">
+    <fieldset className="p-1 w-full rounded-md border border-neutral-600">
+      <legend className="p-1 mx-2 text-xs text-neutral-600">
+       New Title:
+      </legend>
       <input
         onChange={(e) => setNewTitle(e.target.value)}
         value={newTitle}
-        className="border border-slate-500 px-8 py-2"
+        className="mx-1 w-full text-sm outline-none"
         type="text"
         placeholder="Topic Title"
       />
+    </fieldset>
 
+    <fieldset className="p-1 w-full rounded-md border border-neutral-600">
+      <legend className="p-1 mx-2 text-xs text-neutral-600">
+       New Content:
+      </legend>
       <input
         onChange={(e) => setNewDescription(e.target.value)}
         value={newDescription}
-        className="border border-slate-500 px-8 py-2"
+        className="mx-1 w-full text-sm outline-none"
         type="text"
         placeholder="Topic Description"
       />
-
-      <button className="bg-green-600 font-bold text-white py-3 px-6 w-fit">
-        Update Topic
+    </fieldset>
+    <section className="flex gap-4 items-center">
+      <button
+        type="submit"
+        className="p-2 text-sm bg-gray-200 rounded-md shadow-md text-neutral-700 font-regular w-fit"
+      >
+        Add Topic
       </button>
-    </form>
+      <Link href={'/'} className="text-sm text-red-500">Back?</Link>
+    </section>
+  </form>
   );
 }

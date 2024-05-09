@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AddTopic() {
   const [title, setTitle] = useState("");
@@ -18,7 +19,7 @@ export default function AddTopic() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/topics", {
+      const res = await fetch("/api/topics/", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -37,29 +38,41 @@ export default function AddTopic() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <input
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-        className="border border-slate-500 px-8 py-2"
-        type="text"
-        placeholder="Topic Title"
-      />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-3 w-full">
+      <fieldset className="p-1 w-full rounded-md border border-neutral-600">
+        <legend className="p-1 mx-2 text-xs text-neutral-600">
+          Title:
+        </legend>
+        <input
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          className="mx-1 w-full text-sm outline-none"
+          type="text"
+          placeholder="Topic Title"
+        />
+      </fieldset>
 
-      <input
-        onChange={(e) => setDescription(e.target.value)}
-        value={description}
-        className="border border-slate-500 px-8 py-2"
-        type="text"
-        placeholder="Topic Description"
-      />
-
-      <button
-        type="submit"
-        className="bg-green-600 font-bold text-white py-3 px-6 w-fit"
-      >
-        Add Topic
-      </button>
+      <fieldset className="p-1 w-full rounded-md border border-neutral-600">
+        <legend className="p-1 mx-2 text-xs text-neutral-600">
+          Content:
+        </legend>
+        <input
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          className="mx-1 w-full text-sm outline-none"
+          type="text"
+          placeholder="Topic Description"
+        />
+      </fieldset>
+      <section className="flex gap-4 items-center">
+        <button
+          type="submit"
+          className="p-2 text-sm bg-gray-200 rounded-md shadow-md text-neutral-700 font-regular w-fit"
+        >
+          Add Topic
+        </button>
+        <Link href={'/'} className="text-sm text-red-500">Back?</Link>
+      </section>
     </form>
   );
 }

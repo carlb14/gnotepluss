@@ -1,15 +1,15 @@
 "use client";
 
-import { HiOutlineTrash } from "react-icons/hi";
-import { useRouter } from "next/navigation";
 
+import { useRouter } from "next/navigation";
+import TrashCan from "@/assets/trashcan";
 export default function RemoveBtn({ id }) {
   const router = useRouter();
   const removeTopic = async () => {
     const confirmed = confirm("Are you sure?");
 
     if (confirmed) {
-      const res = await fetch(`http://localhost:3000/api/topics?id=${id}`, {
+      const res = await fetch(`/api/topics/?id=${id}`, {
         method: "DELETE",
       });
 
@@ -20,8 +20,8 @@ export default function RemoveBtn({ id }) {
   };
 
   return (
-    <button onClick={removeTopic} className="text-red-400">
-      <HiOutlineTrash size={24} />
+    <button onClick={removeTopic} >
+      <TrashCan className="w-5 h-5"/>
     </button>
   );
 }
